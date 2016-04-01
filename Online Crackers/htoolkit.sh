@@ -4,8 +4,11 @@ function RequestHash {
 	URL='http://hashtoolkit.com/reverse-hash?hash='
 	HASH="$1"
 	PAYLOAD="$URL$HASH"
-	LINE=146
-	OUTP=$(curl $PAYLOAD | sed -n "${LINE}{p;q;}" | cut -d '>' -f2 | cut -d '<' -f1)
+	echo $PAYLOAD
+#	LINE=146
+#	OUTP=$(curl $PAYLOAD | sed -n "${LINE}{p;q;}" | cut -d '>' -f2 | cut -d '<' -f1)
+	A=$(curl $PAYLOAD)
+	OUTP=$(echo $A  | grep '<span title="decrypted md5 hash">' | cut -d '>' -f2 | cut -d '<' -f1)
 	if [ ! -z "$OUTP" ] && [ ${#HASH} == 32 ]
 	then
 		echo '$dynamic_0$'$HASH:$OUTP >> hos.pot
